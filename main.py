@@ -300,9 +300,65 @@
 # **Ввод:** `print_operation_table(lambda x, y: x * y) `
 # **Вывод:**
 # 1 2 3 4 5 6
-#
 # 2 4 6 8 10 12
 # 3 6 9 12 15 18
 # 4 8 12 16 20 24
 # 5 10 15 20 25 30
 # 6 12 18 24 30 36
+
+
+# def print_operation_table(operation, num_rows=6, num_columns=6):
+#     for i in range(1, num_rows + 1):
+#         for y in range(1, num_columns + 1):
+#             print(operation(i, y), end=" ")
+#         print()
+#
+# print_operation_table(lambda x, y: x * y)
+
+#
+# Задача 38: Дополнить телефонный справочник возможностью изменения и удаления данных. Пользователь также может
+# ввести имя или фамилию, и Вы должны реализовать функционал для изменения и удаления данных
+
+
+print("Выберите что Вы хотите сделать со справочником:\n1 - показать все номера\n2 - показать номер телефона"
+      " конкретного абонетна\n3 - добавить нового абонента\n4 - удалить абонента\n0 - выйти из справочника")
+answer = int(input("Укажите режим работы: "))
+
+while answer != 0:
+    if answer == 1:
+        with open("sprawochnik.txt", "r") as file:
+            print("Имя абонента        Фамилия абонента      Номер телефона        Адрес")
+            for i in file:
+
+                print(i.split()[0] + " " + i.split()[1] + " " + i.split()[2] + " " + i.split()[3])
+    elif answer == 2:
+        name = input("Введите имя абонента: ").strip()
+        with open("sprawochnik.txt", "r") as file:
+            for i in file:
+                if i.split()[0].lower() == name.lower():
+                    print(f"Номер абонента: {i.split()[2]}")
+                    break
+            else:
+                print("Такого абонента нет")
+    elif answer == 3:
+        new_name = input("Введите имя абонента: ").strip().title()
+        new_surname = input("Введите фамилию абонента: ").strip().title()
+        new_phone = input("Введите номер абонента: ").strip()
+        new_adres = input("Введите адрес абонента: ").strip()
+        with open("sprawochnik.txt", "a") as file:
+            file.write(f"{new_name} {new_surname} {new_phone} {new_adres}\n")
+            print("Абонент успешно добавлен!")
+    elif answer == 4:
+        delete_name = input("Введите имя абонента: ").strip().title()
+        with open("sprawochnik.txt", "w+") as file:
+            for i in file:
+                if i.split()[0].title() != delete_name:
+                    file.write(f"{i[0]} {i[1]} {i[2]} {i[3]}\n")
+            print("Абонент успешно удален!")
+
+
+
+    answer = int(input("Укажите режим работы: "))
+
+print("До свидания!")
+
